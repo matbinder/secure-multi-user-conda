@@ -67,12 +67,11 @@ RUN cd /tmp \
     && ${CONDA_DIR}/bin/pip install --force-reinstall --no-deps --pre pyiron \
     && conda clean --all -y
 
-# Fix permissions 
+# Compile python
 RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +
 
 # Create user with UID=1000 and in the 'users' group
 RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_UID} -D ${PYIRON_USER} \
-    && chown ${PYIRON_USER} /tmp/jupyterlab-debug-* \
     && chown -R ${PYIRON_USER} ${HOME}
 
 # Configure container startup as root
