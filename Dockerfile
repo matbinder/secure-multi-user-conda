@@ -58,8 +58,6 @@ RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_U
     && chown ${PYIRON_USER} ${CONDA_DIR} \
     && chown -R ${PYIRON_USER} ${HOME}
 
-USER ${PYIRON_USER}
-
 # Install 
 RUN cd /tmp \
     && mkdir -p ${CONDA_DIR} \
@@ -75,7 +73,8 @@ RUN cd /tmp \
     && ${CONDA_DIR}/bin/pip install --force-reinstall --no-deps --pre pyiron \
     && conda clean --all -y
 
-USER root
+# Fix permissions 
+RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}/pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +
 
 # Configure container startup as root
 WORKDIR ${HOME}/
