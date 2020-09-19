@@ -74,7 +74,8 @@ RUN cd /tmp \
     && conda clean --all -y
 
 # Fix permissions 
-RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}/pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +
+RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}/pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +\
+    && chown -R ${PYIRON_USER}:${PYIRON_USER} ${HOME}
 
 # Configure container startup as root
 WORKDIR ${HOME}/
