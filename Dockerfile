@@ -52,12 +52,6 @@ ENV MINICONDA_MD5_SUM 87e77f097f6ebb5127c77662dfc3165e
 
 COPY . ${HOME}
 
-# Create user with UID=1000 and in the 'users' group
-RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_UID} -D ${PYIRON_USER} \
-    && mkdir -p ${CONDA_DIR} \
-    && chown ${PYIRON_USER} ${CONDA_DIR} \
-    && chown -R ${PYIRON_USER} ${HOME}
-
 # Install 
 RUN cd /tmp \
     && mkdir -p ${CONDA_DIR} \
@@ -74,8 +68,11 @@ RUN cd /tmp \
     && conda clean --all -y
 
 # Fix permissions 
-RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}/pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +\
-    && chown -R ${PYIRON_USER}:${PYIRON_USER} ${HOME}
+RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}/pkgs/*" -exec ${CONDA_DIR}/bin/python -m py_compile {} +
+
+# Create user with UID=1000 and in the 'users' group
+RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_UID} -D ${PYIRON_USER} 
+    && chown -R ${PYIRON_USER} ${HOME}
 
 # Configure container startup as root
 WORKDIR ${HOME}/
