@@ -17,3 +17,4 @@ dependencies:
 - pyiron-data
 - sqsgenerator
 - pymatgen
+- mscorefonts
