@@ -29,26 +29,22 @@ RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/re
     && rm -rf glibc*apk /var/cache/apk/*
 
 # Configure environment
-ENV CONDA_DIR /srv/conda/envs/notebook/
-ENV PATH ${CONDA_DIR}/bin:${PATH}
-ENV SHELL /bin/bash
-ENV PYIRON_USER pyiron
-ENV PYIRON_UID 1000
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
-ENV HOME /home/${PYIRON_USER}
-
-# Openmpi fixes
-ENV OMPI_MCA_plm isolated
-ENV OMPI_MCA_rmaps_base_oversubscribe yes
-ENV OMPI_MCA_btl_vader_single_copy_mechanism none
-
-# Configure Miniconda
-ENV MINICONDA_VER 4.8.3
-ENV MINICONDA Miniconda3-py38_${MINICONDA_VER}-Linux-x86_64.sh
-ENV MINICONDA_URL https://repo.continuum.io/miniconda/${MINICONDA}
-ENV MINICONDA_MD5_SUM d63adf39f2c220950a063e0529d4ff74
+ENV CONDA_DIR=/srv/conda/envs/notebook/ \
+    PATH=${CONDA_DIR}/bin:${PATH} \
+    SHELL=/bin/bash \
+    PYIRON_USER=pyiron \
+    PYIRON_UID=1000 \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    HOME=/home/${PYIRON_USER} \
+    OMPI_MCA_plm=isolated \
+    OMPI_MCA_rmaps_base_oversubscribe=yes \
+    OMPI_MCA_btl_vader_single_copy_mechanism=none \
+    MINICONDA_VER=4.8.3 \
+    MINICONDA=Miniconda3-py38_${MINICONDA_VER}-Linux-x86_64.sh \
+    MINICONDA_URL=https://repo.continuum.io/miniconda/${MINICONDA} \
+    MINICONDA_MD5_SUM=d63adf39f2c220950a063e0529d4ff74
 
 COPY . ${HOME}
 
@@ -59,10 +55,8 @@ RUN cd /tmp \
     && echo "${MINICONDA_MD5_SUM}  miniconda.sh" | md5sum -c - \
     && ${SHELL} miniconda.sh -f -b -p ${CONDA_DIR} \
     && rm miniconda.sh \
-    && ${CONDA_DIR}/bin/conda install --yes conda==${MINICONDA_VER}
-
-# Compile python packages - set conda-forge as default channel - set mkl as default blas implementation 
-RUN source ${CONDA_DIR}/bin/activate \
+    && ${CONDA_DIR}/bin/conda install --yes conda==${MINICONDA_VER} \
+    && source ${CONDA_DIR}/bin/activate \
     && conda install -y -c conda-forge libblas=*=*mkl \
     && printf "channel_priority: strict\nchannels:\n  - conda-forge\n  - defaults\nssl_verify: true" > ${CONDA_DIR}.condarc \
     && printf "libblas[build=*mkl]" > ${CONDA_DIR}conda-meta/pinned \
