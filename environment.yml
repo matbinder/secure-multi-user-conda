@@ -1,12 +1,11 @@
 channels:
 - conda-forge
 dependencies:
-- python
+- python  # general packages 
 - jupyterlab
 - nodejs >=14
 - seaborn
 - mscorefonts
-- libblas=*=*mkl
 - pyiron  # packages for atomistic simulation   
 - lammps
 - gpaw
