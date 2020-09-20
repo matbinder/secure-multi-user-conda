@@ -2,19 +2,16 @@ channels:
 - conda-forge
 dependencies:
 - python
-- pyiron
-- pyiron_base
-- lammps
-- iprpy-data
-- gpaw
-- sphinxdft >=2.7.0
-- sphinxdft-data
-- nglview
-- seaborn
-- pyscal
 - jupyterlab
-- pyiron-data
-- sqsgenerator
-- pymatgen
+- nodejs
+- seaborn
 - mscorefonts
 - libblas=*=*mkl
+- pyiron  # packages for atomistic simulation   
+- lammps
+- gpaw
+- sphinxdft
+- nglview
+- pyscal
+- sqsgenerator
+- pymatgen
