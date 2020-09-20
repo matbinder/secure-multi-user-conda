@@ -62,12 +62,10 @@ RUN cd /tmp \
     && ${CONDA_DIR}/bin/conda install --yes conda==${MINICONDA_VER} \
     && source ${CONDA_DIR}/bin/activate \
     && conda env update -n root -f "${HOME}/environment.yml" \
-    && conda install --yes -c conda-forge nodejs \
     && ${SHELL} ${HOME}/postBuild \
-    && ${CONDA_DIR}/bin/pip install --force-reinstall --no-deps --pre pyiron \
-    && conda clean --all -y
+    && rm ${HOME}/postBuild ${HOME}/environment.yml ${HOME}/README.md ${HOME}/Dockerfile
 
-# Compile python - set conda-forge as default channel - set mkl as default blas implementation 
+# Compile python packages - set conda-forge as default channel - set mkl as default blas implementation 
 RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}pkgs/*" -exec ${CONDA_DIR}bin/python -m py_compile {} +\
     && printf "channel_priority: strict\nchannels:\n  - conda-forge\n  - defaults\nssl_verify: true" > ${CONDA_DIR}.condarc \
     && printf "libblas[build=*mkl]" > ${CONDA_DIR}conda-meta/pinned \
