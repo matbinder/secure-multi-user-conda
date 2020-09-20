@@ -42,9 +42,9 @@ ENV CONDA_DIR=/srv/conda/envs/notebook/ \
     OMPI_MCA_rmaps_base_oversubscribe=yes \
     OMPI_MCA_btl_vader_single_copy_mechanism=none \
     MINICONDA_VER=4.8.3 \
+    MINICONDA_MD5_SUM=d63adf39f2c220950a063e0529d4ff74\
     MINICONDA=Miniconda3-py38_${MINICONDA_VER}-Linux-x86_64.sh \
-    MINICONDA_URL=https://repo.continuum.io/miniconda/${MINICONDA} \
-    MINICONDA_MD5_SUM=d63adf39f2c220950a063e0529d4ff74
+    MINICONDA_URL=https://repo.continuum.io/miniconda/${MINICONDA} 
 
 COPY . ${HOME}
 
