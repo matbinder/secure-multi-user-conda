@@ -73,7 +73,7 @@ RUN find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}pkgs/*" -exec ${CONDA_DI
     && printf "libblas[build=*mkl]" > ${CONDA_DIR}conda-meta/pinned \
     && conda update --all -y \
     && conda clean --all -y \
-    && printf "__conda_setup=\"\$(\"${CONDA_DIR}bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"${CONDA_DIR}etc/profile.d/conda.sh\" ]; then\n        . \"${CONDA_DIR}etc/profile.d/conda.sh\"\n    else\n         export PATH=\"${CONDA_DIR}bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n" > ${HOME}/.bashrc
+    && printf "__conda_setup=\"\$(\"${CONDA_DIR}bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"${CONDA_DIR}etc/profile.d/conda.sh\" ]; then\n        . \"${CONDA_DIR}etc/profile.d/conda.sh\"\n    else\n         export PATH=\"${CONDA_DIR}bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n" > ${HOME}/.profile
 
 # Create user with UID=1000 and in the 'users' group
 RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_UID} -D ${PYIRON_USER} \
