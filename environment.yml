@@ -3,7 +3,7 @@ channels:
 dependencies:
 - python
 - jupyterlab
-- nodejs
+- nodejs >=14
 - seaborn
 - mscorefonts
 - libblas=*=*mkl
