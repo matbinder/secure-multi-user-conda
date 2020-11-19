@@ -3,6 +3,7 @@ Test this environment on: [![Binder](https://mybinder.org/badge_logo.svg)](https
 
 The focus of this setup is to demonstrate how to configure a conda environment for high performance computing on a multi-user system. This means one conda environment is installed which is used from multiple users and can be updated regularly by the administrative user. The challange in this approach is that we do not want to allow non-administrative users to modify the environment and at the same time as python is a just-in-time compiled language users typically need write access to execute python code. Therefore the official anaconda documentation recommends to give all users in the same group read, write and execute access: 
 https://docs.anaconda.com/anaconda/install/multi-user/#multi-user-anaconda-installation-on-linux
+
 But in this case users might be able to install new packages via pip or directly via conda or modify the python code of existing packages. Both is not recommended for a high performance computing environment which is focused on stability. Instead this tutorial proposes to provide the users with only read and execute access and only the administrative user with write access. 
 
 # Installation 
