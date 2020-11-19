@@ -53,6 +53,7 @@ RUN cd /tmp \
     && curl -L ${MINICONDA_URL}  -o miniconda.sh \
     && echo "${MINICONDA_MD5_SUM}  miniconda.sh" | md5sum -c - \
     && ${SHELL} miniconda.sh -f -b -p ${CONDA_DIR} \
+    && chmod -R 755 ${CONDA_DIR} \
     && rm miniconda.sh \
     && ${CONDA_DIR}/bin/conda install --yes conda==${MINICONDA_VER} \
     && source ${CONDA_DIR}/bin/activate \
