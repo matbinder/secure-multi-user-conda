@@ -1,5 +1,6 @@
 # Secure multi user conda environment
 Test this environment on: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jan-janssen/secure-multi-user-conda/master)
+
 You can import any python package installed but you do not have the permission to install any new packages or modify any of the installed packages. 
 
 The focus of this setup is to demonstrate how to configure a conda environment for high performance computing on a multi-user system. This means one conda environment is installed which is used from multiple users and can be updated regularly by the administrative user. The challange in this approach is that we do not want to allow non-administrative users to modify the environment and at the same time as python is a just-in-time compiled language users typically need write access to execute python code. Therefore the official anaconda documentation recommends to give all users in the same group read, write and execute access: 
