@@ -62,10 +62,9 @@ RUN cd /tmp \
     && printf "libblas[build=*mkl]" > ${CONDA_DIR}conda-meta/pinned \
     && conda update --all -y \
     && conda env update -n root -f "${HOME}/environment.yml" \
-    && find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}pkgs/*" -exec ${CONDA_DIR}bin/python -m py_compile {} +\
+    && find ${CONDA_DIR} -name "*.py" ! -path "${CONDA_DIR}pkgs/*" -exec ${CONDA_DIR}bin/python -m py_compile {} +; exit 0 \
     && conda clean --all -y \
-    && printf "__conda_setup=\"\$(\"${CONDA_DIR}bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"${CONDA_DIR}etc/profile.d/conda.sh\" ]; then\n        . \"${CONDA_DIR}etc/profile.d/conda.sh\"\n    else\n         export PATH=\"${CONDA_DIR}bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n" > ${HOME}/.profile \
-    && rm ${HOME}/environment.yml ${HOME}/README.md ${HOME}/Dockerfile
+    && printf "__conda_setup=\"\$(\"${CONDA_DIR}bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"${CONDA_DIR}etc/profile.d/conda.sh\" ]; then\n        . \"${CONDA_DIR}etc/profile.d/conda.sh\"\n    else\n         export PATH=\"${CONDA_DIR}bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n" > ${HOME}/.profile
 
 # Create user with UID=1000 and in the 'users' group
 RUN adduser -s ${SHELL} --disabled-password --gecos "Default user" -u ${PYIRON_UID} -D ${PYIRON_USER} \
